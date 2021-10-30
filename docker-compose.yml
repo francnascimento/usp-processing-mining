@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  
+  base:
+    image: base_image
+    build:
+      context: .
+      dockerfile: Dockerfile
+    network_mode: host
+
+  bash:
+    image: base_image
+    user: root
+    volumes:
+      - .:/usr/app/
+    working_dir: /usr/app/
+    entrypoint: /bin/sh
+    network_mode: host
+
+  python3:
+    image: base_image
+    user: root
+    volumes:
+      - .:/usr/app/
+    working_dir: /usr/app/
+    command: "python3"
+    network_mode: host
+
+  jupyter:
+    image: base_image
+    user: root
+    volumes:
+      - .:/usr/app/
+    working_dir: /usr/app/
+    environment:
+      - JUPYTER_PORT
+    command: "jupyter lab --ip=0.0.0.0 --port=${JUPYTER_PORT} --allow-root --no-browser"
+    ports:
+      - ${JUPYTER_PORT}:${JUPYTER_PORT}
