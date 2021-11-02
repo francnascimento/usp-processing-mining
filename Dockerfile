@@ -1,4 +1,4 @@
-FROM python:3.6-slim-buster AS base_image
+FROM python:3.7-slim-buster AS francisco-process-mining
 
 ARG APP_DIR=/usr/app/
 
@@ -11,6 +11,8 @@ WORKDIR ${APP_DIR}
 RUN apt-get update
 
 RUN apt-get install -y build-essential
+
+RUN apt-get install -y graphviz
 
 COPY requirements.txt ${APP_DIR}
 
